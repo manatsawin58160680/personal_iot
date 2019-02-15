@@ -1,0 +1,135 @@
+<!--
+  Generated template for the AddDevicePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-row>
+    <ion-col col-2>
+      <button ion-button clear (click)="back_current()">
+        <ion-icon style="font-size:25px" name="backspace" color="light"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-8 style="text-align: center;margin-top: 10px;">
+      <label style="color:white; font-size:25px;"><b>เพิ่มอุปกรณ์</b></label>
+    </ion-col>
+  </ion-row>
+
+</ion-header>
+
+
+<ion-content id="bg-add">
+
+  <!-- <ion-card style="height:250px">
+    <ion-card-header>
+      <b>คำแนะนำก่อนการใช้งาน</b>
+    </ion-card-header>
+    <ion-card-content>
+      <!-- <ion-list >
+           <ion-item *ngFor="let item of list; let i = index" >
+             <label style="font-size: 16px">{{i+1}} {{item}}</label>
+           </ion-item>
+         </ion-list> -->
+  <!-- <label style="margin-left:20px;font-size: 16px">1. เช็คอุปกรณ์ว่าเสียบปลั๊กรึยัง
+        <ion-icon style="color:blue" ios="ios-outlet" md="md-outlet"></ion-icon>
+      </label><br>
+      <label style="margin-left:20px;font-size: 16px">2. เข้า WiFi ชื่อ 'ESP8266SETUP'</label><br>
+      <label style="margin-left:20px;font-size: 16px">3. กดปุ่มลงทะเบียนอุปกรณ์ข้างล่าง</label><br>
+      <label style="margin-left:20px;font-size: 16px">4. กรอกชื่อผู้ใช้(Wifi) และรหัสผ่าน(WiFi)</label><br>
+      <label style="margin-left:20px;font-size: 16px">5. กดตกลงและรอสักครู่</label><br>
+    </ion-card-content>
+  </ion-card>  -->
+
+  <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px">
+    <ion-label>ชนิดอุปกรณ์ : </ion-label>
+    <ion-select [(ngModel)]="device_type" (ionChange)="test1(device_type)">
+      <ion-option value="esp8266">ESP8266</ion-option>
+      <ion-option value="nb-iot">NB-IoT</ion-option>
+    </ion-select>
+  </ion-item>
+
+
+  <form *ngIf="device_type == 'nb-iot'" [formGroup]="device_form" (ngSubmit)="add()">
+
+    <ion-item  style="background-color: rgb(68, 66, 66);color:oldlace;font-size:18px"
+      no-lines>
+      <ion-icon name="add"></ion-icon> เพิ่มอุปกรณ์
+    </ion-item>
+    <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px">
+      <ion-label style="color: black;opacity: 1;font-size:18px">
+        ชื่ออุปกรณ์ :<label style="color: red">*</label>
+      </ion-label>
+      <ion-input type="text" formControlName="device_name" [(ngModel)]="device.device_name"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="device_form.controls.device_name.hasError('required') && device_form.controls.device_name.touched"
+      no-lines style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกชื่ออุปกรณ์</p>
+    </ion-item>
+    <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px" no-lines>
+      <ion-label style="color: black;opacity: 1;">
+        รายอะเอียด :<label style="color: red">*</label> 
+      </ion-label>
+      <ion-input formControlName="device_description" type="text" clearOnEdit="flase" [(ngModel)]="device.device_description"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="device_form.controls.device_description.hasError('required') && device_form.controls.device_description.touched"
+      no-lines style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกรายอะเอียด</p>
+    </ion-item>
+    <button style="margin-top: 3px;height: 50px;" ion-button block type="submit" [disabled]="!device_form.valid">เข้าสู่ระบบ</button>
+  </form>
+
+
+  <form *ngIf="device_type == 'esp8266'" [formGroup]="device_wifi" (ngSubmit)="config_wifi()">
+
+      <ion-item  style="background-color: rgb(68, 66, 66);color:oldlace;font-size:18px" no-lines>
+      <ion-icon name="add"></ion-icon> เพิ่มอุปกรณ์
+    </ion-item>
+    <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px">
+      <ion-label style="color: black;opacity: 1;font-size:18px">
+        ชื่ออุปกรณ์ :<label style="color: red">*</label>
+      </ion-label>
+      <ion-input type="text" formControlName="device_name" [(ngModel)]="device.device_name"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="device_wifi.controls.device_name.hasError('required') && device_wifi.controls.device_name.touched"
+      no-lines style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกชื่ออุปกรณ์</p>
+    </ion-item>
+    <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px" no-lines>
+      <ion-label style="color: black;opacity: 1;">
+        รายอะเอียด :<label style="color: red">*</label> 
+      </ion-label>
+      <ion-input formControlName="device_description" type="text" clearOnEdit="flase" [(ngModel)]="device.device_description"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="device_wifi.controls.device_description.hasError('required') && device_wifi.controls.device_description.touched"
+      no-lines style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกรายอะเอียด</p>
+    </ion-item>
+
+    <ion-item *ngIf="device_type == 'esp8266'" style="background-color: rgb(68, 66, 66);color:oldlace;font-size:18px" no-lines>
+      <ion-icon name="wifi"></ion-icon> ตั้งค่าระบบเครือข่าย
+    </ion-item>
+
+    <ion-item  style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px">
+      <ion-label>ชื่อผู้ใช้ : </ion-label>
+      <ion-select formControlName="wifi_username" [(ngModel)]="wifi.wifi_username">
+        <ion-option *ngFor="let item of data">{{item.SSID}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="device_type == 'esp8266'" style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px" no-lines>
+      <ion-label style="color: black;opacity: 1;font-size:18px">
+        รหัสผ่าน : <label style="color: red">*</label> 
+      </ion-label>
+      <ion-input formControlName="wifi_password" type="text" [(ngModel)]="wifi.wifi_password"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="device_wifi.controls.wifi_password.hasError('required') && device_wifi.controls.wifi_password.touched" no-lines style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกรหัสผ่าน</p>
+    </ion-item>
+    <button style="margin-top: 3px;height: 50px;" ion-button block type="submit" [disabled]="!device_wifi.valid">เข้าสู่ระบบ</button>
+
+  </form>
+
+</ion-content>

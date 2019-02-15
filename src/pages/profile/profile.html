@@ -1,0 +1,173 @@
+<ion-header>
+    <ion-row>
+      <ion-col col-2>
+        <button ion-button menuToggle clear>
+          <ion-icon style="font-size:25px" name="menu" color="light"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-8 style="text-align: center;margin-top: 10px;">
+        <label style="color:white; font-size:20px;"><b>จัดการประวัติส่วนตัว</b></label>
+        </ion-col>
+    </ion-row>
+  </ion-header>
+
+<ion-content padding id="bg-profile">
+    <ion-fab right bottom>
+        <button ion-fab color="light" (click)="setting1()">
+          <ion-icon name="add-circle" >
+          </ion-icon>
+        </button>
+      </ion-fab>
+  <ion-item id="bg_profile" style="height:180px;border-radius: 10px;" no-lines>
+    <ion-row>
+      <ion-col col-4 style="text-align:center; margin-top: 15px;">
+        <ion-icon name="person" style="color: rgb(62, 231, 15);font-size: 70px; margin-top : 50px;"></ion-icon>
+      </ion-col>
+      <ion-col col-8 style="text-align:left; margin-top: 50px;">
+        <ion-row style="margin-top: 15px;">
+          <ion-col>
+            <label style="font-size: 14px;color: white;"><b>ยินดีต้อนรับคุณ : </b></label>
+            <label style="font-size: 14px;color: white" *ngFor="let item of _name"> {{item.name}}</label>
+            <button ion-button id="button1" *ngIf="showComp" style="font-size:7px; margin-bottom: 10px" small color="danger"
+              (click)="setting_name($event)">
+              แก้ไข
+            </button>
+          </ion-col>
+        </ion-row>
+        <div style=" border-bottom: 2px solid rgba(249, 254, 255, 0.333);margin: 10px 0;width: 90%;"> </div>
+        <ion-row>
+          <ion-col>
+            <label style="font-size: 14px;color: white"><b>ชื่อผู้ใช้ :</b></label>
+            <label style="font-size: 14px;color: white"> {{_username}}</label>
+          </ion-col>
+        </ion-row>
+        <div style=" border-bottom: 2px solid rgba(249, 254, 255, 0.333);margin: 10px 0;width: 90%;"> </div>
+
+        <ion-row>
+          <ion-col>
+            <label style="font-size:14px;color: white"><b>อุปกรณ์ทั้งหมด : </b></label>
+            <label style="font-size:14px;color: white"> {{count_all}}</label>
+            <label style="font-size:14px;color: white"> อุปกรณ์</label>
+          </ion-col>
+        </ion-row>
+        <div style=" border-bottom: 2px solid rgba(249, 254, 255, 0.333);margin: 10px 0;width: 90%;"> </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-6 style="text-align:left">
+        <button ion-button style="font-size:10px" color="secondary" (click)="setting1()">
+          <!-- add_device($event) -->
+          <label style="font-size:10px">
+            + เพิ่มอุปกรณ์
+          </label>
+        </button>
+      </ion-col>
+      <ion-col col-6 style="text-align:right">
+        <button ion-button style="font-size:10px" color="dark_low" (click)="setting()">
+          <label style="font-size:10px">แก้ไขข้อมูลส่วนตัว</label>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-item>
+
+
+  <ion-card style="height:180px; border-radius: 20px;" *ngIf="showComp1" aria-disabled="true">
+    <ion-card-header style="background-color :rgb(17, 186, 17); color:aliceblue;">
+      เพิ่มอุปกรณ์
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>ชื่ออุปกรณ์ : </ion-label>
+            <ion-input type="text" placeholder="ESP...." [(ngModel)]="name_device"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>รายละเอียด : </ion-label>
+            <ion-input type="text" placeholder="แปลง...." [(ngModel)]="name_work"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="showComp1" style="border-radius: 20px; height: 250px;">
+    <ion-card-header style="background-color :rgb(17, 186, 17); color:aliceblue;">
+      ตั้งค่าเครือข่าย
+    </ion-card-header>
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>ชื่อผู้ใช้(WiFi)</ion-label>
+            <ion-select [(ngModel)]="name_wifi">
+              <ion-option *ngFor="let item of data">{{item.SSID}}</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label>รหัสผ่าน(WiFi)</ion-label>
+            <ion-input type="text" [(ngModel)]="pass_wifi"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6 style="text-align:center">
+          <button ion-button (click)="cancle()" color="danger">ยกเลิก</button>
+        </ion-col>
+        <ion-col col-6 style="text-align: center">
+          <button ion-button (click)="add()" color="secondary">ตกลง</button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <!-- ========================================================================================================================= -->
+  <ion-list style="text-align:center;margin-top: 20px">
+    <ion-item-sliding *ngFor="let item of _user_device_name;let i = index" id="itemslide">
+      <ion-item no-lines>
+        <ion-row>
+          <ion-col col-6>
+            <label style="font-size:20px; opacity: 1;"><b>{{item.device_description}}</b></label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6 style="text-align:left;font-size:13px">
+            <ion-icon ios="ios-wifi" md="md-wifi" style="transform: rotate(50deg); color:rgb(137, 198, 47);font-size:20px"></ion-icon>
+            <label *ngIf="data_device_all_time[i] > -50" style="color:rgb(15, 201, 15);opacity: 1;">ระดับสัญญาณดีมาก({{data_device_all_time[i]}}
+              dBm)</label>
+            <label *ngIf="data_device_all_time[i] < -50 && data_device_all_time[i] > -70" style="color:rgb(243, 202, 20);opacity: 1;">ระดับสัญญาณดี({{data_device_all_time[i]}}
+              dBm)</label>
+            <label *ngIf="data_device_all_time[i] < -70" style="color:rgb(255, 11, 2);opacity: 1;">ระดับสัญญาณแย่({{data_device_all_time[i]}}
+              dBm)</label>
+          </ion-col>
+          <ion-col col-6 style="text-align: right;font-size:13px;margin-top: 4px">
+            <label style="opacity: 1;">{{item.device_name}}</label>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+
+      <ion-item-options side="right">
+        <button ion-button style="font-size:30px;opacity: 1;" (click)="notification(item.device_name,item.device_description)"
+          color="primary">
+          <ion-icon name="notifications" style="font-size:30px"></ion-icon>
+        </button>
+        <button ion-button style="font-size:30px;opacity: 1;" color="dark_low">
+          <ion-icon ios="ios-settings" md="md-settings" style="font-size:30px" (click)="modifile($event,item.device_name,item.device_description)"></ion-icon>
+        </button>
+      </ion-item-options>
+
+      <ion-item-options side="left" (ionSwipe)="Delete(item.device_name)">
+        <button ion-button style="font-size:30px;opacity: 1;" color="danger">
+          <ion-icon name="trash" style="font-size:30px"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

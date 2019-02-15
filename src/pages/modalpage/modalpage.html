@@ -1,0 +1,107 @@
+<!--
+  Generated template for the ModalpagePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-row>
+    <ion-col col-2>
+      <button ion-button clear (click)="back_current()">
+        <ion-icon style="font-size:25px" name="backspace" color="light"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-8 style="text-align: center;margin-top: 10px;">
+      <label style="color:white; font-size:25px;"><b>สภาพอากาศย้อนหลัง</b></label>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content padding id="bgmodal">
+  <ion-card id="bg" style="height: 140px;border-radius:25px">
+    <ion-row>
+      <ion-col col-6 style="text-align:center; margin-top: 10px;">
+        <ion-icon name="person" style="color: rgb(62, 231, 15);font-size: 70px; margin-top : 20px;" (click)="fullmap()"></ion-icon>
+      </ion-col>
+      <ion-col col-6 style="text-align:left; margin-top: 10px;">
+        <!-- <div style=" border-bottom: 2px solid rgba(249, 254, 255, 0.333);margin: 10px 0;width: 90%;"> </div> -->
+        <ion-row>
+          <ion-col>
+            <label style="color:white; font-size: 12px  ">ชื่ออุปกรณ์ : {{device_name_graph}}</label>
+          </ion-col>
+        </ion-row>
+        <div style=" border-bottom: 2px solid rgba(249, 254, 255, 0.333);margin: 10px 0;width: 90%;"> </div>
+        <ion-row>
+          <ion-col>
+            <label style="color:white; font-size: 12px  ">รายละเอียด : {{device_name_work}}</label>
+          </ion-col>
+        </ion-row>
+        <div style=" border-bottom: 2px solid rgba(249, 254, 255, 0.333);margin: 10px 0;width: 90%;"> </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
+  <ion-card id="bg" style="border-radius:25px">
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12 style="margin-top:5px">
+          <label class="txt" style="font-size: 18px;margin-top: 5px;color:azure;margin-left:20px">สภาพอากาศย้อนหลังจากช่วงเวลา</label>
+        </ion-col>
+      </ion-row>
+      <div style=" border-bottom: 2px solid rgba(249, 254, 255, 0.333);margin: 10px 0;width: 100%;"> </div>
+      <ion-row style="text-align:center">
+        <ion-col col-12>
+          <button ion-button color="yellow" style="font-size:16px;color:rgb(12, 12, 12);" small (click)="history(1,'HOUR')">1ชม.</button>
+          <button ion-button color="yellow" style="font-size:16px;color:rgb(12, 12, 12);" small (click)="history(3,'HOUR')">3ชม.</button>
+          <button ion-button color="yellow" style="font-size:16px;color:rgb(12, 12, 12);" small (click)="history(12,'HOUR')">12ชม.</button>
+          <button ion-button color="yellow" style="font-size:16px;color:rgb(12, 12, 12);" small (click)="history(1, 'DAY')">1วัน</button>
+          <button ion-button color="yellow" style="font-size:16px;color:rgb(12, 12, 12);" small (click)="history(2, 'DAY')">2วัน</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+  
+    <ion-card id="bg" style="height:500px;border-radius: 25px" *ngIf = "device_privious_temp_date" >
+      <ion-card-header class="txt">
+        <ion-icon ios="ios-trending-up" md="md-trending-up" class="cloude" color="light"></ion-icon>
+        <label style="color:azure;"><b>สภาพอากาศย้อนหลังช่วงเวลา {{privious}} {{Day_TH}}</b></label>
+      </ion-card-header>
+      <ion-card-content>
+        <canvas height="700px" width="500px" #lineCanvas></canvas>
+      </ion-card-content>
+    </ion-card>
+    <ion-row>
+      <div style=" border-bottom: 4px solid rgba(249, 254, 255, 0.333);margin: 10px 0;width: 100%;"> </div>
+      <ion-col col-12 style="margin-top:5px">
+        <label class="txt" style="font-size: 18px;margin-top: 5px;color:azure;margin-left:20px">สภาพอากาศย้อนหลังจากวัน</label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-2></ion-col>
+        <ion-col col-8>
+          <ion-item style="margin-top:15px; opacity: 0.8;border-radius: 25px">
+            <ion-label> <ion-icon style="margin-top:5px" name="calendar"></ion-icon> วันที่</ion-label>
+            <ion-datetime displayFormat="YYYY/MM/DD" [(ngModel)]="myDate" placeholder="เลือกวัน" (ionChange)="history_chart()"></ion-datetime>
+          </ion-item>
+      </ion-col>
+      <ion-col col-2></ion-col>
+    </ion-row>
+    <ion-card id="bg" style="height:500px;border-radius: 25px">
+      <ion-card-header class="txt">
+        <b>
+          <ion-icon ios="ios-trending-up" md="md-trending-up" color ="light" class="cloude"></ion-icon>
+        </b>
+        <label style="color:azure;"><b>สภาพอากาศ ณ วันที่ {{myDate}}</b></label>
+      </ion-card-header>
+      <ion-card-content>
+        <canvas height="700px" width="500px" #lineCanvas_day></canvas>
+      </ion-card-content>
+    </ion-card>
+  </ion-card>
+
+
+ <label style="font-size: 50px; color:paleturquoise">{{test}}</label>
+
+</ion-content>

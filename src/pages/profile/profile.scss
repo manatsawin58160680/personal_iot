@@ -1,0 +1,33 @@
+#bg-profile{
+    background-image: url('https://images.wallpaperscraft.com/image/field_grass_rain_clouds_wind_weather_48127_1366x768.jpg');
+    background-color: transparent !important;
+    background-size: cover !important;
+}
+#itemslide{
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.646);
+    margin-top:10px;
+    text-align: center;
+}
+#card_profile{
+    background-image: url("https://images.wallpaperscraft.com/image/sky_clouds_light_81968_1024x768.jpg");    
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#bg_profile {
+    background-color:rgba(10, 10, 10, 0.687);
+
+}
+    #bg_profile .txt_profile{
+        font-weight:bold;
+        color:#ffffff;
+    }
+ion-scroll {
+        min-height: 1020px; 
+        height: auto;
+
+        .scroll-content {
+            padding: 0px !important;
+        }    
+    }
+

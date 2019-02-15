@@ -1,0 +1,178 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>ลงทะเบียนเข้าสู่ระบบ</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content id="page_regis" style="padding:25px">
+
+  <form [formGroup]="register_form" (ngSubmit)="next_config()">
+    <ion-item style="background-color: rgb(68, 66, 66);color:oldlace; font-size:18px"  no-lines>
+      <ion-icon name="contact"></ion-icon>  ประวัติส่วนตัว
+    </ion-item>
+    <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px">
+      <ion-label style="color: black;opacity: 1;font-size:16px">
+        ชื่อ :
+      </ion-label>
+      <ion-input type="text" formControlName="name" [(ngModel)]="register.name"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.name.hasError('required') && register_form.controls.name.touched" no-lines
+      style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกชื่อ</p>
+    </ion-item>
+    <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px">
+      <ion-label style="color: black;opacity: 1;font-size:16px">
+        นาสกุล :
+      </ion-label>
+      <ion-input type="text" formControlName="surname" [(ngModel)]="register.surname"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.surname.hasError('required') && register_form.controls.surname.touched"
+      no-lines style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกนาสกุล</p>
+    </ion-item>
+    <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px">
+      <ion-label style="color: black;opacity: 1;font-size:16px">
+        อีเมล์<label style="color: red">*</label> :
+      </ion-label>
+      <ion-input type="text" formControlName="email" [(ngModel)]="register.email"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.email.hasError('required') && register_form.controls.email.touched"
+      no-lines style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกอีเมล์</p>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.email.hasError('pattern') && register_form.controls.email.touched" no-lines
+      style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">รูปแบบอีเมล์ไม่ถูกต้อง</p>
+    </ion-item>
+    <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px">
+      <ion-label style="color: black;opacity: 1;">
+        เบอร์โทรศัพท์ :
+      </ion-label>
+      <ion-input type="text" formControlName="phone" [(ngModel)]="register.phone"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.phone.hasError('required') && register_form.controls.phone.touched"
+      no-lines style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกเบอร์โทรศัพท์</p>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.phone.hasError('pattern') && register_form.controls.phone.touched" no-lines
+      style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">รูปแบบหมายเลขผิด</p>
+    </ion-item>
+
+    <!-- เกี่ยวกับการเข้าสู้ระบบ -->
+    <!-- =================================================================================================================== -->
+
+    <ion-item style="background-color: rgb(68, 66, 66);color:oldlace;font-size:18px" no-lines>
+      <ion-icon name="log-in"></ion-icon>  เข้าสู่ระบบ
+    </ion-item>
+    <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px">
+      <ion-label style="color: black;opacity: 1;font-size:18px">
+        ชื่อผู้ใช้<label style="color: red">*</label>  :
+      </ion-label>
+      <ion-input type="text" formControlName="username" [(ngModel)]="register.username"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.username.hasError('required') && register_form.controls.username.touched"
+      no-lines style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกชื่อผู้ใช้</p>
+    </ion-item>
+    <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px" no-lines>
+      <ion-label style="color: black;opacity: 1;">
+        รหัสผ่าน<label style="color: red">*</label>  :
+      </ion-label>
+      <ion-input formControlName="password" type="password" clearOnEdit="flase" [(ngModel)]="register.password"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.password.hasError('required') && register_form.controls.password.touched"
+      no-lines style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกรหัสผ่าน</p>
+    </ion-item>
+    <ion-item style="background-color: rgba(255, 255, 255, 0.728);margin-top:0px" no-lines>
+      <ion-label style="color: black;opacity: 1;font-size:18px">
+        ยืนยันรหัสผ่าน<label style="color: red">*</label>  :
+      </ion-label>
+      <ion-input formControlName="confirm_password" type="password" clearOnEdit="flase" [(ngModel)]="register.confirm_password"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="register_form.controls.confirm_password.hasError('required') && register_form.controls.confirm_password.touched"
+      no-lines style="background-color: rgba(255, 255, 255, 0.728);font-size:16px">
+      <p ion-text color="danger">กรุณากรอกยืนยันรหัสผ่าน</p>
+    </ion-item>
+    <button style="margin-top: 3px;height: 50px;" ion-button block type="submit" [disabled]="!register_form.valid">เข้าสู่ระบบ</button>
+  </form>
+
+
+  <!-- <ion-list style="margin-top:0px">
+    <ion-item style="background-color: rgb(154, 144, 144);color:oldlace">
+      เข้าสู่ระบบ
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="Name_regis" placeholder="name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="Username_regis" placeholder="username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" [(ngModel)]="Password_regis" placeholder="password"></ion-input>
+    </ion-item>
+    <ion-item style="background-color: rgb(154, 144, 144)">
+      อุปกรณ์
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="Device_name" placeholder="key-device"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="Detail" placeholder="detail"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>WiFi</ion-label>
+      <ion-select placeholder="no">
+        <ion-option>Edorome</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" [(ngModel)]="Password_regis" placeholder="password"></ion-input>
+    </ion-item>
+
+    <ion-col col-12 style="text-align: center;margin-top:15px">
+      <button ion-button color="primary" style="font-size: 16px" block (click)="next_config()">เสร็จสิ้น</button>
+    </ion-col>
+  </ion-list> -->
+  <!-- <ion-card style="margin-top:30px; height:400px; width: 200; text-align: center"> -->
+  <!-- <ion-card-header style="text-align: center ">
+      <label style="font-size: 18px;"><b>สมัครสมาชิก</b></label>
+    </ion-card-header>
+    <ion-card-content>
+      
+        <ion-item>
+          <ion-label ><b>ชื่อ :</b></ion-label>
+          <ion-input type="text" [(ngModel)]="Name_regis" placeholder="ใส่ชื่อ"></ion-input>
+        </ion-item>
+
+        <ion-item style="margin-top:10px">
+          <ion-label ><b>ชื่อผู้ใช้ :</b></ion-label>
+          <ion-input type="text" [(ngModel)]="Username_regis" placeholder="ใส่ชื่อผู้ใช้งาน"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label ><b>รหัสผ่าน :</b></ion-label>
+          <ion-input type="password" [(ngModel)]="Password_regis" placeholder="ใส่พาสเวิด"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label ><b>ชื่ออุปกรณ์ : </b></ion-label>
+          <ion-input type="text" [(ngModel)]="Device_name" placeholder="ESP8266"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label ><b>รายละเอียด : </b></ion-label>
+          <ion-input type="text" [(ngModel)]="Detail" placeholder="ไร่องุ่น"></ion-input>
+        </ion-item>
+      
+    </ion-card-content>
+    <ion-row>
+      <ion-col col-12 style="text-align: center">
+        <button ion-button color="primary" style="font-size: 16px" block (click)="next_config()">ต่อไป</button>
+      </ion-col>
+    </ion-row>
+  </ion-card> -->
+
+
+  <p style="text-align: left;color: white">ถ้าไม่มีบัญชีผู้ใช้กรุณาสมัครมาชิก<a (click)="go_regispage()">ลงทะเบียน</a></p>
+</ion-content>

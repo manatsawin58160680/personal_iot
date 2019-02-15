@@ -1,17 +1,22 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color = "dark_low">
     <ion-title>
-      Contact
+      แก้ไขชื่อผู้ใช้
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-start></ion-icon>
-      @ionicframework
-    </ion-item>
-  </ion-list>
+  <ion-item>
+    <ion-label>ชื่ออุปกรณ์ : </ion-label>
+    <ion-input type="text" [(ngModel)]="New_user_name"></ion-input>
+  </ion-item>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 style="text-align:center">
+        <button ion-button (click) = return() color = "danger">ยกเลิก</button>
+        <button ion-button (click)= "update()" color = "secondary">อัปเดท</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

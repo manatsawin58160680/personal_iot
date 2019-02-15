@@ -1,0 +1,142 @@
+<ion-header>
+  <ion-row>
+    <ion-col col-2>
+      <button ion-button clear (click)="back_current()">
+        <ion-icon style="font-size:25px" name="backspace" color="light"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-8 style="text-align: center;margin-top: 10px;">
+      <label style="color:white; font-size:18px;"><b>ตั้งค่าการเเจ้งเตือน {{device_work_name}}</b></label>
+    </ion-col>
+  </ion-row>
+</ion-header>
+
+<ion-content padding id="page">
+<ion-fab right bottom>
+  <button ion-fab color="light" (click)="setting()">
+    <ion-icon name="add-circle" >
+    </ion-icon>
+  </button>
+</ion-fab>
+<!-- ==================================================================================== -->
+<ion-row>
+  <ion-col col-12>
+    <ion-card *ngIf="showComp" style="height: 420px;font-size:16px;border-radius: 20px;">
+      <ion-card-content>
+        <ion-row>
+          <ion-col col-12>
+            <ion-item>
+              <ion-label style="font-size:16px">ตัววัดสภาพอากาศ</ion-label>
+              <ion-select [(ngModel)]="select_weather">
+                <ion-option value = "temp">อุณหภูมิ</ion-option>
+                <ion-option value = "humidity">ความชื้น</ion-option>
+                <ion-option value = "light">ความเข้มแสง</ion-option>
+                <ion-option value = "pressure">ความดันอากาศ</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12>
+            <ion-item>
+              <ion-label style="font-size:16px">เงื่อนไขการแจ้งเตือน</ion-label>
+              <ion-select placeholder="มากกว่า/น้อยกว่า" [(ngModel)]="oparetion">
+                <ion-option value="มากกว่า">มากกว่า</ion-option>
+                <ion-option value="น้อยกว่า">น้อยกว่า</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-6 style="text-align:left;margin-top:10px">
+            <label style="font-size:14px;">{{select_weather}}{{oparetion}}</label>
+          </ion-col>
+          <ion-col col-6 style="text-align:right">
+            <button *ngIf="select_weather == 'อุณหภูมิ'" ion-button small color="danger" round>{{brightness}}</button>
+            <button *ngIf="select_weather == 'ความชื้น'" ion-button small color="primary" round>{{brightness}}</button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-range *ngIf="select_weather == 'อุณหภูมิ'" pin="true" min="20" max="80" step="2" [(ngModel)]="brightness"
+              color="danger">
+              <ion-icon small range-left name="sunny" color="orange"></ion-icon>
+              <ion-icon range-right name="sunny" color="danger"></ion-icon>
+            </ion-range>
+            <ion-range *ngIf="select_weather == 'ความชื้น'" pin="true" min="20" max="80" step="2" [(ngModel)]="brightness"
+              color="danger">
+              <ion-icon small range-left name="water" color="primary"></ion-icon>
+              <ion-icon range-right name="water" color="primary"></ion-icon>
+            </ion-range>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="select_weather == 'ความชื้น'" col-4>
+            <label style="font-size:14px">รายละเอียดการแจ้งเตือน :</label>
+          </ion-col>
+          <ion-col col-8 *ngIf="select_weather == 'ความชื้น'">
+            <textarea [(ngModel)]="detail_textarea"></textarea>
+          </ion-col>
+
+          <ion-col *ngIf="select_weather == 'อุณหภูมิ'" col-4>
+            <label style="font-size:14px">รายละเอียดการแจ้งเตือน :</label>
+          </ion-col>
+          <ion-col col-8 *ngIf="select_weather == 'อุณหภูมิ'">
+            <textarea [(ngModel)]="detail_textarea"></textarea>
+          </ion-col>
+
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 style="text-align:right">
+            <button ion-button full color="secondary" round (click)="check_value()">ตกลง</button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </ion-col>
+</ion-row>
+
+<ion-list style="text-align:center;margin-top: 0px">
+
+  <ion-item-sliding *ngFor="let item of notifi_data; let i = index" id="itemslide">
+    <ion-item (click) = "modifile_notification(item.notification_id)">
+      <ion-row>
+        <ion-col col-8 style="margin-top: 7px;">
+          <label style="color: gray;font-size:22px;" *ngIf="N_status[i] == 'false'"><b>{{weather[i]}}{{oparetions[i]}}
+              {{brightnesss[i]}}</b></label>
+          <label style="font-size:22px;" *ngIf="N_status[i] == 'true'"><b>{{weather[i]}}{{oparetions[i]}} {{brightnesss[i]}}</b></label>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item no-lines>
+            <ion-toggle checked="{{N_status[i]}}" (ionChange)="toggle_notifi($event,item.notification_id)"></ion-toggle>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-8 style="text-align:left">
+          <!-- <ion-icon *ngIf="toggle == false" ios="ios-book-outline" md="md-book"></ion-icon>  -->
+          <label style="font-size:24; color: gray" *ngIf="N_status[i] == 'false'">รายละเอียด : </label>
+          <label style="font-size:24; color: gray" *ngIf="N_status[i] == 'false'">{{detail_textareas[i]}}</label>
+          <!-- <ion-icon *ngIf="toggle == true" ios="ios-book-outline" md="md-book"></ion-icon>  -->
+          <label style="font-size:24;" *ngIf="N_status[i] == 'true'">รายละเอียด : </label>
+          <label style="font-size:24;" *ngIf="N_status[i] == 'true'"> {{detail_textareas[i]}}</label>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+
+    <ion-item-options side="left" (ionSwipe)="Delete(item.notification_id)">
+      <button ion-button style="font-size:30px;opacity: 1;" expandable (click)="Delete(item.notification_id)" color="danger">
+        <ion-icon name="trash" style="font-size:30px"></ion-icon>
+      </button>
+    </ion-item-options>
+    <!-- <ion-item-options side="right" (ionSwipe)="modifile_notification(item.Notifi_id)">
+      <button ion-button style="font-size:30px;opacity: 1;" expandable (click)="modifile_notification(item.notification_id)" color="dark_low">
+        <ion-icon name="cog" style="font-size:30px"></ion-icon>
+      </button>
+    </ion-item-options> -->
+
+  </ion-item-sliding>
+</ion-list>
+
+
+</ion-content>
