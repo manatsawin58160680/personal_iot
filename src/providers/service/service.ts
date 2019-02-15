@@ -219,5 +219,15 @@ export class ServiceProvider {
     return this.http.get(url).map((res)=>res.json());
 
   }
+  select_devices(place){
+    let url = this.api + "API_Select_Deviecs.php?place=" + place;
+    return this.http.get(url).map((res)=>res.json());
+  }
+
+  select_devices_type(place,type){
+    let url = this.api + "API_Select_Deviecs_type.php?place=" + place +
+              "&type=" + type;
+    return this.http.get(url).map((res)=>res.json());
+  }
 }
 

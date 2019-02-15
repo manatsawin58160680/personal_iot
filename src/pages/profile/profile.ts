@@ -22,6 +22,11 @@ import { NotificationPage } from '../notification/notification';
   templateUrl: 'profile.html',
 })
 export class ProfilePage {
+
+  private place_profile;
+  private type_profile;
+
+
   private _username;
   private _password;
   private _name;
@@ -55,10 +60,10 @@ export class ProfilePage {
     private hotspot: Hotspot,
     public modalCtrl: ModalController) {
 
-      this.hotspot.scanWifi().then((networks: Array<HotspotNetwork>) => {
-        this.data=networks;
-        console.log(".........hotspot..........",JSON.stringify(networks));
-      });
+    // this.hotspot.scanWifi().then((networks: Array<HotspotNetwork>) => {
+    //   this.data = networks;
+    //   console.log(".........hotspot..........", JSON.stringify(networks));
+    // });
 
     this._username = localStorage.getItem("username");
     this._password = localStorage.getItem("password");
@@ -73,9 +78,35 @@ export class ProfilePage {
       this._user_device_name = res;
     });
 
-    this.select();
+    // this.select();
   }// constucter
- 
+
+  select_place() {
+    this.service.select_devices(this.place_profile).subscribe((res) => {
+      console.log(res);
+      console.log(res[0].device_description);
+      for (let j in res) {
+        this.data_device_all[j] = res[j];
+        this.data_device_all_time[j] = this.data_device_all[j].device_description;
+        this.data_device_all_name[j] = this.data_device_all[j].type_of_iot;
+      }
+      console.log(this.data_device_all_name);
+    });
+  }
+
+  select_type() {
+    this.data_device_all = [];
+    this.data_device_all_time = [];
+    this.data_device_all_name = [];
+    this.service.select_devices_type(this.place_profile,this.type_profile).subscribe((res) => {
+      for (let j in res) {
+        this.data_device_all[j] = res[j];
+        this.data_device_all_time[j] = this.data_device_all[j].device_description;
+        this.data_device_all_name[j] = this.data_device_all[j].type_of_iot;
+      }
+      console.log(this.data_device_all_name);
+    });
+  } 
   add_device(myEvent) {
     let popover = this.popover.create(PopoverConfigPage);
     popover.present({
@@ -170,7 +201,7 @@ export class ProfilePage {
         for (let i in res) {
           this.count_all = parseInt(i) + 1;
         }
-        this.select();
+        // this.select();
       });
       this.showComp1 = false;
     }, 1000);
@@ -179,7 +210,7 @@ export class ProfilePage {
     }, 10000);
   }
 
-  modifile(myEvent, device_name,Device_work_name) {
+  modifile(myEvent, device_name, Device_work_name) {
     console.log(Device_work_name);
     let popover = this.popover.create(ModifilePage,
       {
@@ -194,32 +225,32 @@ export class ProfilePage {
     });
   }
 
-  select() {
-    let username = localStorage.getItem("username");
-    this.service.getdeviceby_username(username).subscribe((res_value) => {
-      let data_device = res_value;
-     
-      for (let j in data_device) {
-        this.service.getlast_data_sensor(username, data_device[j].device_name).subscribe((res) => {
-          this.data_device_all[j] = res[0];
-          this.data_device_all_time[j] = this.data_device_all[j].Rssi;
-          this.data_device_all_name[j] = this.data_device_all[j].Device_work_name;
-        });
-      }
-    });
-  }
+  // select() {
+  //   let username = localStorage.getItem("username");
+  //   this.service.getdeviceby_username(username).subscribe((res_value) => {
+  //     let data_device = res_value;
 
-  notification(Device_name,Device_work_name){
+  //     for (let j in data_device) {
+  //       this.service.getlast_data_sensor(username, data_device[j].device_name).subscribe((res) => {
+  //         this.data_device_all[j] = res[0];
+  //         this.data_device_all_time[j] = this.data_device_all[j].Rssi;
+  //         this.data_device_all_name[j] = this.data_device_all[j].Device_work_name;
+  //       });
+  //     }
+  //   });
+  // }
+
+  notification(Device_name, Device_work_name) {
     console.log(Device_name);
-    let profileModal = this.modalCtrl.create(NotificationPage, 
-      { 
+    let profileModal = this.modalCtrl.create(NotificationPage,
+      {
         Device_name: Device_name,
-        Device_work_name: Device_work_name 
+        Device_work_name: Device_work_name
       });
     profileModal.present();
   }
 
-  cancle(){
+  cancle() {
     this.showComp1 = false;
   }
 
