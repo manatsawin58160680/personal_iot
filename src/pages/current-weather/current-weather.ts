@@ -94,7 +94,7 @@ export class CurrentWeatherPage {
     let username = localStorage.getItem("username");
     this.menuCtrl.enable(true);
     this.refresh();
-    this.filter();
+    // this.filter();
     this.getCurrAddress();
     // setInterval(() => { 
     //   this.select(this.device_name) // Now the "this" still references the component
@@ -172,8 +172,9 @@ export class CurrentWeatherPage {
       let username = localStorage.getItem("username");
       this.service.getdeviceby_username(username).subscribe((res_value) => {
         this.data_device = res_value;
+        console.log(res_value);
           for (let j in this.data_device) {
-            this.service.getlast_data_sensor(username, this.data_device[j].device_name).subscribe((res) => {
+            this.service.getlast_data_sensor(username, this.data_device[j].device_key).subscribe((res) => {
               this.data_device_all[j] = res[0];
               this.data_device_all_temp[j] = this.data_device_all[j].Temperature;
               this.data_device_all_falenhigh[j] = (1.8 * this.data_device_all[j].Temperature)+32;
@@ -196,7 +197,7 @@ export class CurrentWeatherPage {
       this.service.getdeviceby_username(username).subscribe((res) => {
         this.filter_service_all = res;
         for (let i in res) {
-          this.filter_device_name[i] = this.filter_service_all[i].device_name;
+          this.filter_device_name[i] = this.filter_service_all[i].device_key;
           this.filter_device_work_name[i] = this.filter_service_all[i].device_description;
         }
       })
@@ -239,4 +240,10 @@ export class CurrentWeatherPage {
     add(){
       this.navCtrl.push(AddDevicePage);
     }
+
+    test1(){
+      alert("121351351");
+    }
+
+   
 }

@@ -229,5 +229,18 @@ export class ServiceProvider {
               "&type=" + type;
     return this.http.get(url).map((res)=>res.json());
   }
+
+
+  select_farm(){
+    let url = this.api + "Farm/API_Farm.php";
+    return this.http.get(url).map((res)=>res.json());
+  }
+
+  select_data_farm(farm){
+    console.log(farm);
+    let url = this.api + "Farm/API_Data_Farm.php?farm=" + farm;
+    return this.http.get(url).map((res)=>res.json()); 
+  }
+  
 }
 

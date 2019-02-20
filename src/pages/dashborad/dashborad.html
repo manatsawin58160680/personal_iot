@@ -7,7 +7,7 @@
 <ion-header>
   <ion-row>
     <ion-col col-2>
-      <button ion-button  menuToggle clear>
+      <button ion-button menuToggle clear>
         <ion-icon style="font-size:25px" name="menu" color="light"></ion-icon>
       </button>
     </ion-col>
@@ -38,7 +38,7 @@
       </ion-card>
     </ion-col>
     <ion-col col-6>
-      <ion-card style="height: 100px;" id = "bg_nb-iot">
+      <ion-card style="height: 100px;" id="bg_nb-iot">
         <ion-row>
           <ion-col style="text-align: center">
             <label style="font-size:15px;color:white">NB-IoT</label>
@@ -71,96 +71,48 @@
   </ion-row>
 
   <ion-row>
-    <ion-col col-6>
+    <ion-col>
       <ion-item style="background-color: rgba(255, 255, 255, 0.728);">
-        <ion-label style="font-size:18px">เลือกสถานที่</ion-label>
-        <ion-select [(ngModel)]="place">
-          <ion-option value="1">ไร่เห็ด</ion-option>
-          <ion-option value="2">ไร่ข้าวโพด</ion-option>
-          <ion-option value="3">ไร่ผักกาก</ion-option>
-          <ion-option value="4">ไร่ข้าวสาลี</ion-option>
-        </ion-select>
-      </ion-item>
-    </ion-col>
-    <ion-col col-6>
-      <ion-item style="background-color: rgba(255, 255, 255, 0.728);">
-        <ion-label style="font-size:18px">เลือกชนิดอุปกรณ์</ion-label>
-        <ion-select [(ngModel)]="type">
-          <ion-option value="1">NodeMCU</ion-option>
-          <ion-option value="2">NB-IoT</ion-option>
+        <ion-label style="font-size:18px">Choose farm</ion-label>
+        <ion-select  style="font-size:18px" [(ngModel)]="make_farm" (ionChange)="select_data_device()">
+          <ion-option *ngFor="let item of farm; let i = index;" value="{{item}}">{{item}}</ion-option>
         </ion-select>
       </ion-item>
     </ion-col>
   </ion-row>
 
-  <ion-row>
+  <ion-row *ngIf=" make_farm != ' ' ">
     <ion-col>
       <ion-item no-lines style="background-color: brown; border-top-right-radius: 10px;border-top-left-radius: 10px;">
         <ion-icon name="hammer"></ion-icon>
-        <ion-label style="font-size:18px;color:white">ไร่ข้าวโพด</ion-label>
-        <ion-icon style="margin-top: 15px; font-size:20px;color: white" *ngIf="check_data_account == 0" name="arrow-dropright-circle"
+        <ion-label style="font-size:18px;color:white"> <ion-icon name="leaf" style="color:rgb(159, 245, 22); font-size: 20px;"></ion-icon> {{make_farm}}</ion-label>
+        <!-- <ion-icon style="margin-top: 15px; font-size:20px;color: white" *ngIf="check_data_account == 0" name="arrow-dropright-circle"
           item-end (click)="showDataAccount()"></ion-icon>
         <ion-icon style="margin-top: 15px; font-size:20px;color: white" *ngIf="check_data_account == 1" name="arrow-dropdown-circle"
-          item-end (click)="showDataAccount()"></ion-icon>
+          item-end (click)="showDataAccount()"></ion-icon> -->
       </ion-item>
-      <ion-item *ngIf="check_data_account == 0">
-        <label style="font-size:16px">Device2 :</label>
+
+      <ion-item no-line *ngFor="let items of all; let i = index;" style="color: white;background-color: rgba(15, 15, 15, 0.408);border-bottom-right-radius: 10px;border-bottom-left-radius: 10px;">
+        <label style="font-size:16px">{{dashboard_device_name[i]}}</label>
         <label>
           <ion-icon id="thermometer" name="sunny" style="font-size:14px; margin-right: 0px; margin-bottom: 10px; color:rgb(230, 119, 0)"></ion-icon>
         </label>
-        <label style="font-size:16px">36°C</label>
+        <label style="font-size:16px">{{dashboard_temp[i]}}°C</label>
         <ion-icon id="water" name="water" style="font-size:14px; margin-left: 0px; margin-top: 6px; color:rgb(27, 108, 206)"></ion-icon>
-        <label style="font-size:16px">56%</label>
+        <label style="font-size:16px">{{dashboard_humid[i]}}%</label>
         <ion-icon name="speedometer" style="font-size:14px;margin-left: 0px; margin-bottom: 10px; color:rgb(11, 243, 247)"></ion-icon>
-        <label style="font-size:16px">45 Pa</label>
+        <label style="font-size:16px">{{dashboard_pressure[i]}} Pa</label>
         <ion-icon name="bulb" style="font-size: 14px; margin-right: 0px; margin-top: 6px; color:rgb(237, 248, 17)"></ion-icon>
-        <label style="font-size:16px">22 Lux</label>
-        <button ion-button style="margin-bottom: 12px" color="primary"><ion-icon style="margin-left:8px; font-size:16px" name="search" item-end></ion-icon></button>
+        <label style="font-size:16px">{{dashboard_light[i]}} Lux</label>
+        <button ion-button style="margin-bottom: 12px" color="primary">
+          <ion-icon style="margin-left:8px; font-size:16px" name="search" item-end (click) = "detail_device(dashboard_device_key[i])"></ion-icon>
+        </button>
       </ion-item>
     </ion-col>
   </ion-row>
 
 
-  <ion-row>
-      <ion-col>
-        <ion-item no-lines style="background-color: brown; border-top-right-radius: 10px;border-top-left-radius: 10px;">
-          <ion-icon name="hammer"></ion-icon>
-          <ion-label style="font-size:18px;color:white">ไร่เห็ดเปาะ</ion-label>
-          <ion-icon style="margin-top: 15px; font-size:20px;color: white" *ngIf="check_data_account == 0" name="arrow-dropright-circle"
-            item-end (click)="showDataAccount()"></ion-icon>
-          <ion-icon style="margin-top: 15px; font-size:20px;color: white" *ngIf="check_data_account == 1" name="arrow-dropdown-circle"
-            item-end (click)="showDataAccount()"></ion-icon>
-        </ion-item>
-        <ion-item *ngIf="check_data_account == 0">
-          <label style="font-size:16px">Device1 :</label>
-          <label>
-            <ion-icon id="thermometer" name="sunny" style="font-size:14px; margin-right: 0px; margin-bottom: 10px; color:rgb(230, 119, 0)"></ion-icon>
-          </label>
-          <label style="font-size:16px">36°C</label>
-          <ion-icon id="water" name="water" style="font-size:14px; margin-left: 0px; margin-top: 6px; color:rgb(27, 108, 206)"></ion-icon>
-          <label style="font-size:16px">56%</label>
-          <ion-icon name="speedometer" style="font-size:14px;margin-left: 0px; margin-bottom: 10px; color:rgb(11, 243, 247)"></ion-icon>
-          <label style="font-size:16px">45 Pa</label>
-          <ion-icon name="bulb" style="font-size: 14px; margin-right: 0px; margin-top: 6px; color:rgb(237, 248, 17)"></ion-icon>
-          <label style="font-size:16px">22 Lux</label>
-          <button ion-button style="margin-bottom: 12px" color="primary"><ion-icon style="margin-left:8px; font-size:16px" name="search" item-end></ion-icon></button>
-        </ion-item>
-        <ion-item *ngIf="check_data_account == 0">
-          <label style="font-size:16px">Device2 :</label>
-          <label>
-            <ion-icon id="thermometer" name="sunny" style="font-size:14px; margin-right: 0px; margin-bottom: 10px; color:rgb(230, 119, 0)"></ion-icon>
-          </label>
-          <label style="font-size:16px">36°C</label>
-          <ion-icon id="water" name="water" style="font-size:14px; margin-left: 0px; margin-top: 6px; color:rgb(27, 108, 206)"></ion-icon>
-          <label style="font-size:16px">56%</label>
-          <ion-icon name="speedometer" style="font-size:14px;margin-left: 0px; margin-bottom: 10px; color:rgb(11, 243, 247)"></ion-icon>
-          <label style="font-size:16px">45 Pa</label>
-          <ion-icon name="bulb" style="font-size: 14px; margin-right: 0px; margin-top: 6px; color:rgb(237, 248, 17)"></ion-icon>
-          <label style="font-size:16px">22 Lux</label>
-          <button ion-button style="margin-bottom: 12px" color="primary"><ion-icon style="margin-left:8px; font-size:16px" name="search" item-end></ion-icon></button>
-        </ion-item>
-      </ion-col>
-    </ion-row>
   
-  
+
+
 </ion-content>
