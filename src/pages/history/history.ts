@@ -49,7 +49,7 @@ export class HistoryPage {
     this.device_name_work = this.navParams.get('Device_name_work');
     this.service.select_userall().subscribe((res)=>{
       this.test1 = res[0].username;
-      alert(this.test1);
+ 
     })
   }
 

@@ -8,6 +8,7 @@ import { ProfilePage } from '../profile/profile';
 import { CurrentWeatherPage } from '../current-weather/current-weather';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { DashboradPage } from '../dashborad/dashborad';
 
 /**
  * Generated class for the LoginPage page.

@@ -1,18 +1,18 @@
 <ion-menu [content]="content">
   <ion-header> 
     <ion-toolbar color = "dark">
-      <ion-title style="color: white">เมนู</ion-title>
+      <ion-title style="color: white">Menu</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content style="background-color: rgba(10, 10, 10, 0.741)">
 
     <ion-list>
-      <ion-item  menuClose style="text-align: left;background-color: rgba(10, 10, 10, 0.741)" (click)="profile()">
+      <!-- <ion-item  menuClose style="text-align: left;background-color: rgba(10, 10, 10, 0.741)" (click)="profile()">
         <ion-icon ios="ios-person" md="md-person" style="font-size:25px; color:brown"></ion-icon>
         <label style="font-size:18px;color: white">ยินดีต้อนรับคุณ : </label>
         <label style="font-size:18px;color: white">{{username_sidemenu}}</label>
-      </ion-item>
+      </ion-item> -->
       <button style="margin-top:10px;background-color: rgba(10, 10, 10, 0.741)" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         <ion-icon style="color: white;font-size:18px;" name="{{p.icon}}"></ion-icon>
         <label style="color: white;font-size:18px;">{{p.title}}</label>

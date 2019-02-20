@@ -18,6 +18,7 @@ import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { AddDevicePage } from '../pages/add-device/add-device';
 import { DashboradPage } from '../pages/dashborad/dashborad';
 import { NotificationPage } from '../pages/notification/notification';
+import { HistoryPage } from '../pages/history/history';
 
 @Component({
   templateUrl: 'app.html'
@@ -54,9 +55,9 @@ export class MyApp {
     this.pages = [
       { title: 'Dashborad', component: DashboradPage, icon: "phone-portrait" },
       { title: 'Description device', component: CurrentWeatherPage, icon: "sunny"},
-      { title: 'Manage Personal', component: ProfilePage, icon: "people"},
+      { title: 'Manage Device', component: ProfilePage, icon: "people"},
       { title: 'Notification', component: NotificationPage, icon: "notifications"},
-      { title: 'History Weather', component: WeatherHistoryPage, icon: "trending-up"}
+      { title: 'History Weather', component:HistoryPage, icon: "trending-up"}
     ];
 
     platform.ready().then(() => {
