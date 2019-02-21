@@ -4,7 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler, PopoverController } from 'ion
 import { MyApp } from './app.component';
 import { ContactPage } from '../pages/contact/contact';
 import { TabsPage } from '../pages/tabs/tabs';
-import { HttpModule} from '@angular/http'
+import { HttpModule } from '@angular/http'
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SuperTabsModule } from 'ionic2-super-tabs';
@@ -33,7 +33,8 @@ import { ServiceApiProvider } from '../providers/service-api/service-api';
 import { NotificationPage } from '../pages/notification/notification';
 import { AddDevicePage } from '../pages/add-device/add-device';
 import { HistoryPage } from '../pages/history/history';
-import {DashboradPage} from '../pages/dashborad/dashborad';
+import { DashboradPage } from '../pages/dashborad/dashborad';
+import { DetailDevicePage } from '../pages/detail-device/detail-device';
 
 
 
@@ -58,8 +59,9 @@ import {DashboradPage} from '../pages/dashborad/dashborad';
     NotificationPage,
     AddDevicePage,
     HistoryPage,
-    DashboradPage
- 
+    DashboradPage,
+    DetailDevicePage
+
   ],
   imports: [
     BrowserModule,
@@ -91,14 +93,13 @@ import {DashboradPage} from '../pages/dashborad/dashborad';
     NotificationPage,
     AddDevicePage,
     HistoryPage,
-    DashboradPage
-
-    
+    DashboradPage,
+    DetailDevicePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     ServiceProvider,
     Geolocation,
     Geocoder,
@@ -106,7 +107,7 @@ import {DashboradPage} from '../pages/dashborad/dashborad';
     LocalNotifications,
     ScreenOrientation,
     ServiceApiProvider
- 
+
   ]
 })
-export class AppModule {}
+export class AppModule { }

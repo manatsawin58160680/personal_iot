@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
+import {DetailDevicePage } from '../detail-device/detail-device';
+import { Test1Page } from '../test1/test1';
 
 
 /**
@@ -42,7 +44,7 @@ export class DashboradPage {
                 }
 
       ionViewDidLoad() {
-        console.log('ionViewDidLoad DashboradPage');
+        console.log('Welcome to dashboard');
       }
 
       showDataAccount(){
@@ -66,12 +68,10 @@ export class DashboradPage {
 
       select_data_device(){
         this.service.select_data_farm(this.make_farm).subscribe((res)=>{
-          console.log(res);
-
+          
           for(let i in res){
             this.device_keys[i] = res[i].device_key;
           }
-          console.log(this.device_keys);
           this.get_weather(this.device_keys);
         });
       } //select device_key -> function get_weather
@@ -94,8 +94,11 @@ export class DashboradPage {
           }
       }
 
-      detail_device(device_key){
-        this.navCtrl.push('MyProfilePage');
+      detail_device(device_key,device_name){
+        this.navCtrl.push(DetailDevicePage, {
+          device_key : device_key,
+          device_name : device_name
+        });
       }
       
       clear_data(){
